@@ -7,10 +7,7 @@ Not only helps you display dialog with a blurred background, ars_dialog is here 
 
 First of all, let's leave the old style with `showDialog(blablabla)`, with ArsDialog you have dialog extensions, you just simply call `.show(context)` at the end of your dialog and let the magic work!
 
-There are 2 types of dialogs in here, they are Dialog (popup dialog) and Progress Dialog.
-
-## Dialog
-In Dialog, there are 5 types, they are `ArsDialog`, `ArsAlertDialog`, `ProgressDialog`, `CustomProgressDialog` and `ZoomDialog`.
+There are 5 types, they are `ArsDialog`, `ArsAlertDialog`, `ProgressDialog`, `CustomProgressDialog` and `ZoomDialog`.
 
 ### ArsDialog
 Is a raw dialog where you can view them right away without anything else
