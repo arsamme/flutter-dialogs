@@ -1,16 +1,11 @@
-name: ndialog
+name: ars_dialog
 description: Dialog material widget with blur background and popup animation
-version: 3.3.1
-homepage: https://github.com/nizwar/ndialog
+version: 1.0.0
+homepage: https://github.com/arsamme/flutter-dialogs
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
   flutter:
-    sdk: flutter 
-
-dev_dependencies:
-  flutter_test:
     sdk: flutter
-

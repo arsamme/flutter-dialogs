@@ -1,13 +1,13 @@
 
 ## Dialog
-In Dialog, there are 2 types too, they are `NDialog` and `NAlertDialog`.
+In Dialog, there are 2 types too, they are `ars_dialog` and `NAlertDialog`.
 
-### NDialog
+### ars_dialog
 Is a raw dialog where you can view them right away without anything else
 ``` dart
-  await NDialog(
+  await ars_dialog(
     dialogStyle: DialogStyle(titleDivider: true),
-    title: Text("Hi, This is NDialog"),
+    title: Text("Hi, This is ars_dialog"),
     content: Text("And here is your content, hoho... "),  
     actions: <Widget>[
       FlatButton(child: Text("You"),onPressed: () {}),

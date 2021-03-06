@@ -32,7 +32,7 @@
 * Fix the version changelog
 
 ## [2.1.1+7] - 27 July 2020
-* Show NAlertDialog and NDialog much easier
+* Show NAlertDialog and ars_dialog much easier
 * Optimize the codes!
 
 ## [2.1.0+6] - 19 May 2020
@@ -75,7 +75,7 @@
 ## [2.0.0] - 09 Oct 2019 
 
 * You can blur any dialog background using BlurDialogBackground.
-* separate the NDialog class into 2, NDialog and NAlertDialog.
+* separate the ars_dialog class into 2, ars_dialog and NAlertDialog.
 * Fix bugs when the screen gets smaller (for example when the keyboard appears)
 
 ## [1.2.1+3] - 07 Oct 2019 

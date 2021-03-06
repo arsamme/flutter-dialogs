@@ -1,6 +1,6 @@
+import 'package:ars_dialog/ars_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ndialog/ndialog.dart';
 
 void main() => runApp(MyApp());
 
@@ -20,7 +20,8 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   final String title;
 
-  const MyHomePage({Key key, this.title}) : super(key: key);
+  const MyHomePage({Key? key,required this.title}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,28 +31,30 @@ class MyHomePage extends StatelessWidget {
       body: ListView(
         padding: EdgeInsets.all(20),
         children: <Widget>[
-          FlatButton(
-            color: Colors.blue,
+          TextButton(
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.blue)),
             child: Text(
-              "NAlertDialog show",
+              "ArsAlertDialog show",
               style: TextStyle(color: Colors.white),
             ),
             onPressed: () {
-              NAlertDialog(
+              ArsAlertDialog(
                 title: Text("Test"),
                 content: Text("Iya iya"),
                 blur: 2,
               ).show(context, transitionType: DialogTransitionType.Bubble);
             },
           ),
-          FlatButton(
-            color: Colors.blue,
+          TextButton(
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.blue)),
             child: Text(
-              "NDialog can do it too!",
+              "Ars Dialog can do it too!",
               style: TextStyle(color: Colors.white),
             ),
             onPressed: () {
-              NDialog(
+              ArsDialog(
                 title: Text("Test"),
                 dialogStyle: DialogStyle(
                   animatePopup: false,
@@ -60,12 +63,13 @@ class MyHomePage extends StatelessWidget {
               ).show(context);
             },
           ),
-          FlatButton(
-            color: Colors.blue,
+          TextButton(
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.blue)),
             onPressed: () async {
               ProgressDialog progressDialog = ProgressDialog(
                 context,
-                blur: 0,
+                blur: 10,
                 dialogTransitionType: DialogTransitionType.Shrink,
                 transitionDuration: Duration(milliseconds: 100),
                 onDismiss: () {
@@ -75,24 +79,26 @@ class MyHomePage extends StatelessWidget {
               progressDialog.setLoadingWidget(CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation(Colors.red),
               ));
-              progressDialog.setMessage(Text("Please Wait, Injecting your phone with my virus"));
+              progressDialog.setMessage(
+                  Text("Please Wait, Injecting your phone with my virus"));
               progressDialog.setTitle(Text("Loading"));
-              progressDialog.show();
+              progressDialog.show(useSafeArea: false);
 
               await Future.delayed(Duration(seconds: 5));
 
               progressDialog.setMessage(Text("I mean, virus of love :*"));
-              progressDialog.setLoadingWidget(null);
               progressDialog.setTitle(Text("Just Kidding"));
 
               await Future.delayed(Duration(seconds: 5));
 
               progressDialog.dismiss();
             },
-            child: Text("Progress Dialog", style: TextStyle(color: Colors.white)),
+            child:
+                Text("Progress Dialog", style: TextStyle(color: Colors.white)),
           ),
-          FlatButton(
-            color: Colors.blue,
+          TextButton(
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.blue)),
             onPressed: () async {
               CustomProgressDialog progressDialog = CustomProgressDialog(
                 context,
@@ -104,19 +110,20 @@ class MyHomePage extends StatelessWidget {
               progressDialog.setLoadingWidget(CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation(Colors.red),
               ));
-              progressDialog.show();
+              progressDialog.show(useSafeArea: false);
 
               await Future.delayed(Duration(seconds: 5));
-              progressDialog.setLoadingWidget(null);
 
               await Future.delayed(Duration(seconds: 5));
 
               progressDialog.dismiss();
             },
-            child: Text("Custom Progress Dialog", style: TextStyle(color: Colors.white)),
+            child: Text("Custom Progress Dialog",
+                style: TextStyle(color: Colors.white)),
           ),
-          FlatButton(
-            color: Colors.blue,
+          TextButton(
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.blue)),
             onPressed: () async {
               print(await ProgressDialog.future(
                 context,
@@ -138,10 +145,12 @@ class MyHomePage extends StatelessWidget {
                 title: Text("Loging in"),
               ));
             },
-            child: Text("Progress Dialog Future", style: TextStyle(color: Colors.white)),
+            child: Text("Progress Dialog Future",
+                style: TextStyle(color: Colors.white)),
           ),
-          FlatButton(
-            color: Colors.blue,
+          TextButton(
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.blue)),
             onPressed: () async {
               print(await CustomProgressDialog.future(
                 context,
@@ -160,50 +169,63 @@ class MyHomePage extends StatelessWidget {
                 },
               ));
             },
-            child: Text("Custom Progress Dialog Future", style: TextStyle(color: Colors.white)),
+            child: Text("Custom Progress Dialog Future",
+                style: TextStyle(color: Colors.white)),
           ),
-          FlatButton(
-            color: Colors.blue,
+          TextButton(
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.blue)),
             onPressed: () async {
-              NAlertDialog(
+              ArsAlertDialog(
                 dialogStyle: DialogStyle(titleDivider: true),
-                title: Text("Hi, This is NAlertDialog"),
+                title: Text("Hi, This is ArsAlertDialog"),
                 content: Text("And here is your content, hoho... "),
                 actions: <Widget>[
-                  FlatButton(
+                  TextButton(
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.blue)),
                     child: Text("You"),
                     onPressed: () {},
                   ),
-                  FlatButton(
+                  TextButton(
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.blue)),
                     child: Text("Are"),
                     onPressed: () {},
                   ),
-                  FlatButton(
+                  TextButton(
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.blue)),
                     child: Text("Awesome"),
                     onPressed: () {},
                   )
                 ],
               ).show(context);
             },
-            child: Text("Show NAlertDialog", style: TextStyle(color: Colors.white)),
+            child: Text("Show ArsAlertDialog",
+                style: TextStyle(color: Colors.white)),
           ),
-          FlatButton(
-            color: Colors.blue,
+          TextButton(
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.blue)),
             onPressed: () async {
-              NDialog(
+              ArsDialog(
                 dialogStyle: DialogStyle(titleDivider: true),
-                title: Text("Hi, This is NDialog"),
+                title: Text("Hi, This is Ars Dialog"),
                 content: Text("And here is your content, hoho... "),
                 actions: <Widget>[
-                  FlatButton(
+                  TextButton(
                     child: Text("You"),
                     onPressed: () {},
                   ),
-                  FlatButton(
+                  TextButton(
                     child: Text("Are"),
                     onPressed: () {},
                   ),
-                  FlatButton(
+                  TextButton(
                     child: Text("Awesome"),
                     onPressed: () {},
                   )
@@ -212,33 +234,35 @@ class MyHomePage extends StatelessWidget {
                 context,
               );
             },
-            child: Text("Show NDialog", style: TextStyle(color: Colors.white)),
+            child:
+                Text("Show Ars Dialog", style: TextStyle(color: Colors.white)),
           ),
-          FlatButton(
+          TextButton(
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.blue)),
             child: Text(
               "Show Alert Dialog\nWith Blur Background",
               style: TextStyle(color: Colors.white),
               textAlign: TextAlign.center,
             ),
-            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-            color: Colors.blue,
             onPressed: () async {
               DialogBackground(
                 barrierColor: Colors.black.withOpacity(.5),
                 blur: 0,
                 dialog: AlertDialog(
                   title: Text("Alert Dialog"),
-                  content: Text("Wohoo.. This is ordinary AlertDialog with Blur background"),
+                  content: Text(
+                      "Wohoo.. This is ordinary AlertDialog with Blur background"),
                   actions: <Widget>[
-                    FlatButton(
+                    TextButton(
                       child: Text("You"),
                       onPressed: () {},
                     ),
-                    FlatButton(
+                    TextButton(
                       child: Text("Are"),
                       onPressed: () {},
                     ),
-                    FlatButton(
+                    TextButton(
                       child: Text("Awesome"),
                       onPressed: () {},
                     )
@@ -252,30 +276,31 @@ class MyHomePage extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          FlatButton(
+          TextButton(
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.blue)),
             child: Text(
               "Show Alert Dialog\nWith Custom Background Color",
               style: TextStyle(color: Colors.white),
               textAlign: TextAlign.center,
             ),
-            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-            color: Colors.blue,
             onPressed: () async {
-              NAlertDialog(
+              ArsAlertDialog(
                 backgroundColor: Colors.red.withOpacity(.5),
                 blur: 0,
                 title: Text("Alert Dialog"),
-                content: Text("Wohoo.. This is ordinary AlertDialog with Custom Color background"),
+                content: Text(
+                    "Wohoo.. This is ordinary AlertDialog with Custom Color background"),
                 actions: <Widget>[
-                  FlatButton(
+                  TextButton(
                     child: Text("You"),
                     onPressed: () {},
                   ),
-                  FlatButton(
+                  TextButton(
                     child: Text("Are"),
                     onPressed: () {},
                   ),
-                  FlatButton(
+                  TextButton(
                     child: Text("Awesome"),
                     onPressed: () {},
                   )
@@ -283,28 +308,29 @@ class MyHomePage extends StatelessWidget {
               ).show(context);
             },
           ),
-          FlatButton(
+          TextButton(
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.blue)),
             child: Text(
               "Dialog Extension",
               style: TextStyle(color: Colors.white),
               textAlign: TextAlign.center,
             ),
-            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-            color: Colors.blue,
             onPressed: () async {
               await AlertDialog(
                 title: Text("Alert Dialog"),
-                content: Text("Wohoo.. This is ordinary AlertDialog with Blur background"),
+                content: Text(
+                    "Wohoo.. This is ordinary AlertDialog with Blur background"),
                 actions: <Widget>[
-                  FlatButton(
+                  TextButton(
                     child: Text("You"),
                     onPressed: () {},
                   ),
-                  FlatButton(
+                  TextButton(
                     child: Text("Are"),
                     onPressed: () {},
                   ),
-                  FlatButton(
+                  TextButton(
                     child: Text("Awesome"),
                     onPressed: () {},
                   )
@@ -312,28 +338,29 @@ class MyHomePage extends StatelessWidget {
               ).show(context);
             },
           ),
-          FlatButton(
+          TextButton(
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.blue)),
             child: Text(
               "CupertinoDialog Extension",
               style: TextStyle(color: Colors.white),
               textAlign: TextAlign.center,
             ),
-            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-            color: Colors.blue,
             onPressed: () async {
               await CupertinoAlertDialog(
                 title: Text("Alert Dialog"),
-                content: Text("Wohoo.. This is ordinary AlertDialog with Blur background"),
+                content: Text(
+                    "Wohoo.. This is ordinary AlertDialog with Blur background"),
                 actions: <Widget>[
-                  FlatButton(
+                  TextButton(
                     child: Text("You"),
                     onPressed: () {},
                   ),
-                  FlatButton(
+                  TextButton(
                     child: Text("Are"),
                     onPressed: () {},
                   ),
-                  FlatButton(
+                  TextButton(
                     child: Text("Awesome"),
                     onPressed: () {},
                   )
@@ -341,14 +368,14 @@ class MyHomePage extends StatelessWidget {
               ).show(context);
             },
           ),
-          FlatButton(
+          TextButton(
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.blue)),
             child: Text(
               "ZoomDIALOG",
               style: TextStyle(color: Colors.white),
               textAlign: TextAlign.center,
             ),
-            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-            color: Colors.blue,
             onPressed: () async {
               await ZoomDialog(
                 zoomScale: 5,

@@ -1,11 +1,7 @@
-///By Mochamad Nizwar Syafuan
-///nizwar@merahputih.id
-///==================================================================================
+import 'package:ars_dialog/ars_dialog.dart';
+import 'package:ars_dialog/src/transition.dart';
+import 'package:ars_dialog/src/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:ndialog/src/transition.dart';
-import 'package:ndialog/src/utils.dart';
-
-import 'ndialogBase.dart';
 
 ///Typedef of Progress while on Progress Error
 typedef OnProgressError(dynamic error);
@@ -55,46 +51,46 @@ class ProgressDialog implements _ProgressDialog {
   final BuildContext context;
 
   ///Custom dialog style
-  final DialogStyle dialogStyle;
+  final DialogStyle? dialogStyle;
 
   ///The (optional) title of the progress dialog is displayed in a large font at the top of the dialog.
-  final Widget title;
+  final Widget? title;
 
   ///The (optional) message of the progress dialog is displayed in the center of the dialog in a lighter font.
-  final Widget message;
+  final Widget? message;
 
   ///The (optional) on cancel button that will display at the bottom of the dialog.
   ///Note : Do not use POP to cancel the dialog, just put your cancel code there
-  final Function onCancel;
+  final Function? onCancel;
 
   ///The (optional) cancel text that are displayed at the cancel button of the dialog.
-  final Widget cancelText;
+  final Widget? cancelText;
 
   ///The (optional) default progress widget that are displayed before message of the dialog,
   ///it will replaced when you use setLoadingWidget, and it will restored if you `setLoadingWidget(null)`.
-  final Widget defaultLoadingWidget;
+  final Widget? defaultLoadingWidget;
 
-  ///Is your dialog dismissable?, because its warp by BlurDialogBackground,
+  ///Is your dialog dismissable, because its warp by BlurDialogBackground,
   ///you have to declare here instead on showDialog
-  final bool dismissable;
+  final bool? dismissable;
 
   ///Action on dialog dismissing
-  final Function onDismiss;
+  final Function? onDismiss;
 
   ///Blur on background
-  final double blur;
+  final double? blur;
 
   ///Dialog Barrier background color
-  final Color backgroundColor;
+  final Color? backgroundColor;
 
   ///Dialog Transition Type
-  final DialogTransitionType dialogTransitionType;
+  final DialogTransitionType? dialogTransitionType;
 
   ///Dialog Transition Duration
-  final Duration transitionDuration;
+  final Duration? transitionDuration;
 
   bool _show = false;
-  _ProgressDialogWidget _progressDialogWidget;
+  late _ProgressDialogWidget _progressDialogWidget;
 
   ProgressDialog(this.context,
       {this.dialogTransitionType,
@@ -133,17 +129,16 @@ class ProgressDialog implements _ProgressDialog {
   }
 
   ///Show progress dialog
-  void show() async {
+  void show({bool useSafeArea = true}) async {
     if (!_show) {
       _show = true;
-      if (_progressDialogWidget == null) _initProgress();
-      // await showDialog(context: context, barrierDismissible: dismissable ?? true, builder: (context) => _progressDialogWidget, barrierColor: Color(0x00ffffff));
       await DialogUtils(
         dismissable: dismissable,
         barrierColor: backgroundColor ?? Colors.black.withOpacity(.5),
         child: _progressDialogWidget,
         dialogTransitionType: dialogTransitionType,
         transitionDuration: transitionDuration,
+        useSafeArea: useSafeArea,
       ).show(context);
       _show = false;
     }
@@ -176,24 +171,23 @@ class ProgressDialog implements _ProgressDialog {
   ///reach the end of its action
   static Future future<T>(
     BuildContext context, {
-    @required Future future,
-    DialogStyle dialogStyle,
-    double blur,
-    Color backgroundColor,
-    OnProgressError onProgressError,
-    OnProgressFinish onProgressFinish,
-    OnProgressCancel onProgressCancel,
-    Function onDismiss,
-    bool dismissable,
-    Widget message,
-    Widget title,
-    Widget cancelText,
-    Widget progressWidget,
-    DialogTransitionType dialogTransitionType,
-    Duration transitionDuration,
+    required Future future,
+    DialogStyle? dialogStyle,
+    double? blur,
+    Color? backgroundColor,
+    OnProgressError? onProgressError,
+    OnProgressFinish? onProgressFinish,
+    OnProgressCancel? onProgressCancel,
+    Function? onDismiss,
+    bool? dismissable,
+    Widget? message,
+    Widget? title,
+    Widget? cancelText,
+    Widget? progressWidget,
+    DialogTransitionType? dialogTransitionType,
+    Duration? transitionDuration,
+    bool useSafeArea = true,
   }) async {
-    if (future == null) throw Exception("Future (param) can not be null");
-
     ProgressDialog pDialog = ProgressDialog(
       context,
       message: message,
@@ -210,15 +204,15 @@ class ProgressDialog implements _ProgressDialog {
       transitionDuration: transitionDuration,
     );
 
-    pDialog.show();
+    pDialog.show(useSafeArea: useSafeArea);
 
     var output;
     await future.then((data) {
-      if (onProgressFinish != null) onProgressFinish = onProgressFinish(data);
+      if (onProgressFinish != null) onProgressFinish = onProgressFinish!(data);
       output = data;
       pDialog.dismiss();
     }).catchError((error) {
-      if (onProgressError != null) onProgressError = onProgressError(error);
+      if (onProgressError != null) onProgressError = onProgressError!(error);
       pDialog.dismiss();
     });
 
@@ -229,19 +223,19 @@ class ProgressDialog implements _ProgressDialog {
 //ignore:must_be_immutable
 class _ProgressDialogWidget extends StatefulWidget {
   final DialogStyle dialogStyle;
-  final Widget title, message;
-  final Widget cancelText;
-  final Function onCancel;
-  final Widget loadingWidget;
-  final Function onDismiss;
-  final bool dismissable;
-  final double blur;
-  final Color backgroundColor;
+  final Widget? title, message;
+  final Widget? cancelText;
+  final Function? onCancel;
+  final Widget? loadingWidget;
+  final Function? onDismiss;
+  final bool? dismissable;
+  final double? blur;
+  final Color? backgroundColor;
   _ProgressDialogWidgetState _dialogWidgetState = _ProgressDialogWidgetState();
 
   _ProgressDialogWidget({
-    Key key,
-    @required this.dialogStyle,
+    Key? key,
+    required this.dialogStyle,
     this.title,
     this.message,
     this.onCancel,
@@ -255,32 +249,29 @@ class _ProgressDialogWidget extends StatefulWidget {
 
   @override
   _ProgressDialogWidgetState createState() {
-    if (_dialogWidgetState == null) {
-      _dialogWidgetState = _ProgressDialogWidgetState();
-    }
+    _dialogWidgetState = _ProgressDialogWidgetState();
     return _dialogWidgetState;
   }
 
   _ProgressDialogWidgetState getDialogState() {
-    if (_dialogWidgetState == null) {
-      _dialogWidgetState = _ProgressDialogWidgetState();
-    }
+    _dialogWidgetState = _ProgressDialogWidgetState();
     return _dialogWidgetState;
   }
 }
 
-class _ProgressDialogWidgetState extends State<_ProgressDialogWidget> implements _ProgressDialog {
-  Widget _title, _message, _loading;
-  Color _backgroundColor;
+class _ProgressDialogWidgetState extends State<_ProgressDialogWidget>
+    implements _ProgressDialog {
+  Widget? _title, _message, _loading;
+  Color? _backgroundColor;
 
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     final DialogTheme dialogTheme = DialogTheme.of(context);
 
-    Widget title = _title ?? widget.title;
-    Widget message = _message ?? widget.message;
-    Color backgroundColor = _backgroundColor ?? widget.backgroundColor;
+    Widget? title = _title ?? widget.title;
+    Widget? message = _message ?? widget.message;
+    Color? backgroundColor = _backgroundColor ?? widget.backgroundColor;
     Widget loading = (_loading ?? widget.loadingWidget) ??
         Container(
           padding: EdgeInsets.all(10.0),
@@ -291,7 +282,7 @@ class _ProgressDialogWidgetState extends State<_ProgressDialogWidget> implements
           ),
         );
 
-    EdgeInsetsGeometry msgPadding = title == null
+    EdgeInsetsGeometry? msgPadding = title == null
         ? EdgeInsets.all(15.0)
         : widget.onCancel == null
             ? widget.dialogStyle.contentPadding == null
@@ -299,28 +290,31 @@ class _ProgressDialogWidgetState extends State<_ProgressDialogWidget> implements
                 : widget.dialogStyle.contentPadding
             : EdgeInsets.fromLTRB(15.0, 0, 15.0, 0);
 
-    return NAlertDialog(
+    return ArsAlertDialog(
       title: title,
       dismissable: widget.dismissable ?? true,
       blur: widget.blur,
       backgroundColor: backgroundColor,
       onDismiss: () {
         if (widget.onDismiss != null) {
-          widget.onDismiss();
+          widget.onDismiss!();
         }
-        if (widget.onCancel != null) widget.onCancel();
+        if (widget.onCancel != null) widget.onCancel!();
       },
       dialogStyle: DialogStyle(
           backgroundColor: widget.dialogStyle.backgroundColor,
           titleDivider: widget.dialogStyle.titleDivider,
-          borderRadius: widget.dialogStyle.borderRadius ?? BorderRadius.circular(2.0),
-          contentPadding: msgPadding ?? EdgeInsets.symmetric(horizontal: 20.0),
+          borderRadius:
+              widget.dialogStyle.borderRadius ?? BorderRadius.circular(2.0),
+          contentPadding: msgPadding as EdgeInsets? ??
+              EdgeInsets.symmetric(horizontal: 20.0),
           contentTextStyle: widget.dialogStyle.contentTextStyle,
           elevation: widget.dialogStyle.elevation,
           semanticsLabel: widget.dialogStyle.semanticsLabel,
           // animatePopup: widget.dialogStyle.animatePopup ?? true,
           shape: widget.dialogStyle.shape,
-          titlePadding: widget.dialogStyle.titlePadding ?? EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 0.0),
+          titlePadding: widget.dialogStyle.titlePadding ??
+              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 0.0),
           titleTextStyle: widget.dialogStyle.titleTextStyle),
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -336,7 +330,9 @@ class _ProgressDialogWidgetState extends State<_ProgressDialogWidget> implements
               Expanded(
                 child: DefaultTextStyle(
                   child: Semantics(child: message),
-                  style: widget.dialogStyle.contentTextStyle ?? dialogTheme.contentTextStyle ?? theme.textTheme.subtitle1,
+                  style: widget.dialogStyle.contentTextStyle ??
+                      dialogTheme.contentTextStyle ??
+                      theme.textTheme.subtitle1!,
                 ),
               ),
             ],
@@ -349,12 +345,17 @@ class _ProgressDialogWidgetState extends State<_ProgressDialogWidget> implements
               Container(
                 padding: const EdgeInsets.only(right: 10.0, bottom: 10.0),
                 alignment: Alignment.centerRight,
-                child: FlatButton(
-                  padding: EdgeInsets.only(),
-                  highlightColor: Colors.white.withOpacity(.3),
-                  splashColor: Theme.of(context).accentColor.withOpacity(.2),
+                child: TextButton(
+                  style: ButtonStyle(
+                    padding: MaterialStateProperty.all<EdgeInsets>(
+                      EdgeInsets.only(),
+                    ),
+                    overlayColor: MaterialStateProperty.all<Color>(
+                      Colors.white.withOpacity(.3),
+                    ),
+                  ),
                   onPressed: () {
-                    if (widget.onCancel != null) widget.onCancel();
+                    if (widget.onCancel != null) widget.onCancel!();
                     Navigator.pop(context);
                   },
                   child: DefaultTextStyle(
@@ -397,27 +398,27 @@ class CustomProgressDialog implements _CustomProgressDialog {
   final BuildContext context;
 
   ///Show as the progress, nullable to aplied to default loading widget
-  final Widget loadingWidget;
+  final Widget? loadingWidget;
 
   ///The (optional) on cancel button that will display at the bottom of the dialog.
   ///Note : Do not use POP to cancel the dialog, just put your cancel code there
-  final Function onCancel;
+  final Function? onCancel;
 
-  ///Is your dialog dismissable?, because its warp by BlurDialogBackground,
+  ///Is your dialog dismissable, because its warp by BlurDialogBackground,
   ///you have to declare here instead on showDialog
-  final bool dismissable;
+  final bool? dismissable;
 
   ///Action on dialog dismissing
-  final Function onDismiss;
+  final Function? onDismiss;
 
-  final double blur;
+  final double? blur;
 
-  final Color backgroundColor;
-  final DialogTransitionType dialogTransitionType;
-  final Duration transitionDuration;
+  final Color? backgroundColor;
+  final DialogTransitionType? dialogTransitionType;
+  final Duration? transitionDuration;
 
   bool _show = false;
-  _CustomProgressDialogWidget _progressDialogWidget;
+  late _CustomProgressDialogWidget _progressDialogWidget;
 
   CustomProgressDialog(
     this.context, {
@@ -444,17 +445,16 @@ class CustomProgressDialog implements _CustomProgressDialog {
   }
 
   ///Show progress dialog
-  void show() async {
+  void show({bool useSafeArea = true}) async {
     if (!_show) {
       _show = true;
-      if (_progressDialogWidget == null) _initProgress();
-      // await showDialog(context: context, barrierDismissible: dismissable ?? true, builder: (context) => _progressDialogWidget, barrierColor: Color(0x00ffffff));
       await DialogUtils(
         dismissable: dismissable,
         barrierColor: backgroundColor,
         child: _progressDialogWidget,
         dialogTransitionType: dialogTransitionType,
         transitionDuration: transitionDuration,
+        useSafeArea: useSafeArea,
       ).show(context);
       _show = false;
     }
@@ -484,20 +484,19 @@ class CustomProgressDialog implements _CustomProgressDialog {
   ///reach the end of its action
   static Future future<T>(
     BuildContext context, {
-    @required Future future,
-    OnProgressError onProgressError,
-    OnProgressFinish onProgressFinish,
-    OnProgressCancel onProgressCancel,
-    Color backgroundColor,
-    double blur,
-    Function onDismiss,
-    bool dismissable,
-    Widget loadingWidget,
-    DialogTransitionType dialogTransitionType,
-    Duration transitionDuration,
+    required Future future,
+    OnProgressError? onProgressError,
+    OnProgressFinish? onProgressFinish,
+    OnProgressCancel? onProgressCancel,
+    Color? backgroundColor,
+    double? blur,
+    Function? onDismiss,
+    bool? dismissable,
+    Widget? loadingWidget,
+    DialogTransitionType? dialogTransitionType,
+    Duration? transitionDuration,
+    bool useSafeArea = true,
   }) async {
-    if (future == null) throw Exception("Future (param) can not be null");
-
     CustomProgressDialog pDialog = CustomProgressDialog(
       context,
       loadingWidget: loadingWidget,
@@ -510,15 +509,16 @@ class CustomProgressDialog implements _CustomProgressDialog {
       transitionDuration: transitionDuration,
     );
 
-    pDialog.show();
+    pDialog.show(useSafeArea: useSafeArea);
 
     var output;
     try {
       await future.then((data) {
-        if (onProgressFinish != null) onProgressFinish = onProgressFinish(data);
+        if (onProgressFinish != null)
+          onProgressFinish = onProgressFinish!(data);
         output = data;
       }).catchError((error) {
-        if (onProgressError != null) onProgressError = onProgressError(error);
+        if (onProgressError != null) onProgressError = onProgressError!(error);
       });
     } catch (e) {}
     pDialog.dismiss();
@@ -529,16 +529,17 @@ class CustomProgressDialog implements _CustomProgressDialog {
 
 //ignore:must_be_immutable
 class _CustomProgressDialogWidget extends StatefulWidget {
-  final Function onCancel;
-  final Widget loadingWidget;
-  final Function onDismiss;
-  final double blur;
-  final Color backgroundColor;
-  final bool dismissable;
-  _CustomProgressDialogWidgetState _dialogWidgetState = _CustomProgressDialogWidgetState();
+  final Function? onCancel;
+  final Widget? loadingWidget;
+  final Function? onDismiss;
+  final double? blur;
+  final Color? backgroundColor;
+  final bool? dismissable;
+  _CustomProgressDialogWidgetState _dialogWidgetState =
+      _CustomProgressDialogWidgetState();
 
   _CustomProgressDialogWidget({
-    Key key,
+    Key? key,
     this.onCancel,
     this.dismissable,
     this.onDismiss,
@@ -549,27 +550,26 @@ class _CustomProgressDialogWidget extends StatefulWidget {
 
   @override
   _CustomProgressDialogWidgetState createState() {
-    if (_dialogWidgetState == null) {
-      _dialogWidgetState = _CustomProgressDialogWidgetState();
-    }
+    _dialogWidgetState = _CustomProgressDialogWidgetState();
     return _dialogWidgetState;
   }
 
   _CustomProgressDialogWidgetState getDialogState() {
-    if (_dialogWidgetState == null) {
-      _dialogWidgetState = _CustomProgressDialogWidgetState();
-    }
+    _dialogWidgetState = _CustomProgressDialogWidgetState();
     return _dialogWidgetState;
   }
 }
 
-class _CustomProgressDialogWidgetState extends State<_CustomProgressDialogWidget> implements _CustomProgressDialog {
-  Widget _loadingWidget;
-  Color _backgroundColor;
+class _CustomProgressDialogWidgetState
+    extends State<_CustomProgressDialogWidget>
+    implements _CustomProgressDialog {
+  Widget? _loadingWidget;
+  Color? _backgroundColor;
 
   @override
   Widget build(BuildContext context) {
-    Color backgroundColor = _backgroundColor ?? (widget.backgroundColor ?? Colors.black.withOpacity(.5));
+    Color backgroundColor = _backgroundColor ??
+        (widget.backgroundColor ?? Colors.black.withOpacity(.5));
     Widget loadingWidget = (this._loadingWidget ?? widget.loadingWidget) ??
         Container(
           padding: EdgeInsets.all(10.0),
@@ -589,7 +589,8 @@ class _CustomProgressDialogWidgetState extends State<_CustomProgressDialogWidget
       onDismiss: widget.onDismiss,
       barrierColor: backgroundColor,
       dialog: Padding(
-        padding: MediaQuery.of(context).viewInsets + const EdgeInsets.symmetric(horizontal: 20.0, vertical: 24.0),
+        padding: MediaQuery.of(context).viewInsets +
+            const EdgeInsets.symmetric(horizontal: 20.0, vertical: 24.0),
         child: Center(
           child: loadingWidget,
         ),
