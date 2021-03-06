@@ -5,17 +5,17 @@ Custom dialog with blur background, popup animation and progressDialog with nati
 
 Not only helps you display dialog with a blurred background, ars_dialog is here to help you do many things. for example, with ars_dialog you can display `ProgressDialog` to the user once until it meets the end of `Future`!
 
-First of all, let's leave the old style with showDialog(blablabla), with ars_dialog i provide dialog extensions, you just simply call `.show(context)` at the end of your dialog and let the magic work!
+First of all, let's leave the old style with `showDialog(blablabla)`, with ArsDialog you have dialog extensions, you just simply call `.show(context)` at the end of your dialog and let the magic work!
 
 There are 2 types of dialogs in here, they are Dialog (popup dialog) and Progress Dialog.
 
 ## Dialog
-In Dialog, there are 3 types, they are `ars_dialog`, `NAlertDialog`, `ZoomDialog`.
+In Dialog, there are 5 types, they are `ArsDialog`, `ArsAlertDialog`, `ProgressDialog`, `CustomProgressDialog` and `ZoomDialog`.
 
-### ars_dialog
+### ArsDialog
 Is a raw dialog where you can view them right away without anything else
 ``` dart
-  await ars_dialog(
+  await ArsDialog(
     dialogStyle: DialogStyle(titleDivider: true),
     title: Text("Hi, This is ars_dialog"),
     content: Text("And here is your content, hoho... "),  
@@ -27,13 +27,13 @@ Is a raw dialog where you can view them right away without anything else
   ).show(context);
 ```
 
-### NAlertDialog
+### ArsAlertDialog
 Is a dialog where you can directly set the background attributes without be wrapped by `DialogBackground` and you can simply display them.
 
 ``` dart
-  await NAlertDialog(
+  await ArsAlertDialog(
     dialogStyle: DialogStyle(titleDivider: true),
-    title: Text("Hi, This is NAlertDialog"),
+    title: Text("Hi, This is ArsAlertDialog"),
     content: Text("And here is your content, hoho... "), 
     actions: <Widget>[
       FlatButton(child: Text("You"),onPressed: () {}),
@@ -58,10 +58,6 @@ Is a dialog that you can zoom on it, you can zoom all type of widget on this dia
   ).show(context);
 ``` 
  
-
-## Progress Dialog
-In ProgressDialog, there are 2 types too, they are `ProgressDialog` and `CustomProgressDialog`.
-
 ### ProgressDialog
 Will display the ProgressDialog with Android native style.
 
@@ -90,7 +86,7 @@ Will display the ProgressDialog with Android native style.
 ### CustomProgressDialog
 Will display a progress dialog with customizable widgets
 
-```
+``` dart
   CustomProgressDialog progressDialog = CustomProgressDialog(context,blur: 10);
 
   ///You can set Loading Widget using this function
@@ -109,7 +105,7 @@ Will display a progress dialog with customizable widgets
 
 This is what I'm talking about, Each Progress Dialog has a `.future(context)` static function, which will help you display the progress dialog once until `Future` is completed
 
-```
+``` dart
 ///ProgressDialog
 await ProgressDialog.future(
   context, 
@@ -141,7 +137,7 @@ await CustomProgressDialog.future(
 ## Dialog Extensions!
 You can simply call `show(context)` at the end of Flutter's built-in dialogs.
 
-```
+``` dart
   AlertDialog( ... ).show(context);
   SimpleDialog( ... ).show(context);
   Dialog( ... ).show(context);
@@ -154,7 +150,7 @@ You can use DialogBackground to create your own custom dialog and display them e
 
 Note : BlurDialogBackground is depreceted, use `DialogBackground` instead!
 
-```
+``` dart
   await DialogBackground(
     dialog: AlertDialog(
       title: Text("Alert Dialog"),
