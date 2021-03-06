@@ -9,7 +9,7 @@ First of all, let's leave the old style with `showDialog(blablabla)`, with ArsDi
 
 There are 5 types, they are `ArsDialog`, `ArsAlertDialog`, `ProgressDialog`, `CustomProgressDialog` and `ZoomDialog`.
 
-### ArsDialog
+## ArsDialog
 Is a raw dialog where you can view them right away without anything else
 ``` dart
   await ArsDialog(
@@ -24,7 +24,7 @@ Is a raw dialog where you can view them right away without anything else
   ).show(context);
 ```
 
-### ArsAlertDialog
+## ArsAlertDialog
 Is a dialog where you can directly set the background attributes without be wrapped by `DialogBackground` and you can simply display them.
 
 ``` dart
@@ -39,23 +39,8 @@ Is a dialog where you can directly set the background attributes without be wrap
     ],
   ).show(context);
 ``` 
-
-### ZoomDialog
-Is a dialog that you can zoom on it, you can zoom all type of widget on this dialog, simply write this code and boom, there you go!
-
-
-``` dart
-  await ZoomDialog(
-    zoomScale: 5,
-    child: Container(
-      child: Text("Zoom me!"),
-      color: Colors.white,
-      padding: EdgeInsets.all(20),
-    ),
-  ).show(context);
-``` 
  
-### ProgressDialog
+## ProgressDialog
 Will display the ProgressDialog with Android native style.
 
 ``` dart
@@ -80,7 +65,7 @@ Will display the ProgressDialog with Android native style.
   progressDialog.dismiss();
 ```
 
-### CustomProgressDialog
+## CustomProgressDialog
 Will display a progress dialog with customizable widgets
 
 ``` dart
@@ -130,6 +115,21 @@ await CustomProgressDialog.future(
 )
 
 ```
+
+## ZoomDialog
+Is a dialog that you can zoom on it, you can zoom all type of widget on this dialog, simply write this code and boom, there you go!
+
+
+``` dart
+  await ZoomDialog(
+    zoomScale: 5,
+    child: Container(
+      child: Text("Zoom me!"),
+      color: Colors.white,
+      padding: EdgeInsets.all(20),
+    ),
+  ).show(context);
+``` 
 
 ## Dialog Extensions!
 You can simply call `show(context)` at the end of Flutter's built-in dialogs.
