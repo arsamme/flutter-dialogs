@@ -230,7 +230,8 @@ class _ZoomState extends State<Zoom> with TickerProviderStateMixin {
         }
       } else {
         if (widget.maxZoomWidth * scale! < constraints.maxWidth) {
-          centerLeft = (constraints.maxWidth - widget.maxZoomWidth * scale!) / 2;
+          centerLeft =
+              (constraints.maxWidth - widget.maxZoomWidth * scale!) / 2;
         }
       }
     }
@@ -317,7 +318,8 @@ class _ZoomState extends State<Zoom> with TickerProviderStateMixin {
                         ((auxLeft + localLeft + centerLeft!) * -1 +
                                 midlePoint.dx) *
                             (1 / scale!),
-                        ((auxTop + localTop + centerTop!) * -1 + midlePoint.dy) *
+                        ((auxTop + localTop + centerTop!) * -1 +
+                                midlePoint.dy) *
                             (1 / scale!));
                   }
                 };
