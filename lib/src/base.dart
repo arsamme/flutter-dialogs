@@ -362,7 +362,7 @@ class DialogBackground extends StatelessWidget {
             Navigator.pop(context);
           }
           return false;
-        } as Future<bool> Function()?,
+        },
         child: Stack(
           clipBehavior: Clip.antiAlias,
           alignment: Alignment.center,
@@ -376,21 +376,21 @@ class DialogBackground extends StatelessWidget {
                       Navigator.pop(context);
                     }
                   : () {},
-              child: TweenAnimationBuilder(
-                tween: Tween<double>(begin: 0, end: blur ?? 0),
-                duration: Duration(milliseconds: 300),
-                builder: (context, dynamic val, child) {
-                  return BackdropFilter(
-                    filter: ImageFilter.blur(
-                      sigmaX: val,
-                      sigmaY: val,
+              child: (blur ?? 0) < 1
+                  ? Container()
+                  : TweenAnimationBuilder(
+                      tween: Tween<double>(begin: 0.1, end: blur ?? 0),
+                      duration: Duration(milliseconds: 300),
+                      builder: (context, double? val, Widget? child) {
+                        return BackdropFilter(
+                          filter: ImageFilter.blur(
+                            sigmaX: val ?? 0,
+                            sigmaY: val ?? 0,
+                          ),
+                          child: Container(color: Colors.transparent),
+                        );
+                      },
                     ),
-                    child: Container(
-                      color: Colors.transparent,
-                    ),
-                  );
-                },
-              ),
             ),
             dialog!
           ],
